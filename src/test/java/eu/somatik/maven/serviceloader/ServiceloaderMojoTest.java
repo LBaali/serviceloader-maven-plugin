@@ -15,7 +15,6 @@
  */
 package eu.somatik.maven.serviceloader;
 
-
 import com.google.common.collect.Sets;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
@@ -32,13 +31,18 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * @author Lucien
+ *
+ */
 public class ServiceloaderMojoTest {
 
     @Test
     public void testListCompiledClasses() throws Exception {
-	BuildContext buildContext = new DefaultBuildContext();
+        BuildContext buildContext = new DefaultBuildContext();
         ServiceloaderMojo mojo = new ServiceloaderMojo();
         mojo.setBuildContext(buildContext);
         List<String> list = mojo.listCompiledClasses(new File("target/test-classes"));
@@ -57,10 +61,10 @@ public class ServiceloaderMojoTest {
         BuildContext buildContext = new DefaultBuildContext();
         ServiceloaderMojo mojo = new ServiceloaderMojo();
         mojo.setBuildContext(buildContext);
-        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[]{"com.foo.AbstractFoo"});
+        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[] { "com.foo.AbstractFoo" });
         ReflectionUtils.setVariableValueInObject(mojo, "compileClasspath", Collections.<String>emptyList());
         ReflectionUtils.setVariableValueInObject(mojo, "classFolder", new File("target/test-classes"));
-        ReflectionUtils.setVariableValueInObject(mojo, "excludes", new String[]{"*2*"});
+        ReflectionUtils.setVariableValueInObject(mojo, "excludes", new String[] { "*2*" });
         mojo.execute();
 
         File serviceFile = new File("target/test-classes/META-INF/services/com.foo.AbstractFoo");
@@ -74,10 +78,10 @@ public class ServiceloaderMojoTest {
         BuildContext buildContext = new DefaultBuildContext();
         ServiceloaderMojo mojo = new ServiceloaderMojo();
         mojo.setBuildContext(buildContext);
-        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[]{"com.foo.AbstractFoo"});
+        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[] { "com.foo.AbstractFoo" });
         ReflectionUtils.setVariableValueInObject(mojo, "compileClasspath", Collections.<String>emptyList());
         ReflectionUtils.setVariableValueInObject(mojo, "classFolder", new File("target/test-classes"));
-        ReflectionUtils.setVariableValueInObject(mojo, "includes", new String[]{"*2"});
+        ReflectionUtils.setVariableValueInObject(mojo, "includes", new String[] { "*2" });
         mojo.execute();
 
         File serviceFile = new File("target/test-classes/META-INF/services/com.foo.AbstractFoo");
@@ -91,10 +95,10 @@ public class ServiceloaderMojoTest {
      */
     @Test
     public void testMojoWithAbstractClass() throws MojoExecutionException, IllegalAccessException, IOException {
-	BuildContext buildContext = new DefaultBuildContext();
+        BuildContext buildContext = new DefaultBuildContext();
         ServiceloaderMojo mojo = new ServiceloaderMojo();
         mojo.setBuildContext(buildContext);
-        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[]{"com.foo.AbstractFoo"});
+        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[] { "com.foo.AbstractFoo" });
         ReflectionUtils.setVariableValueInObject(mojo, "compileClasspath", Collections.<String>emptyList());
         ReflectionUtils.setVariableValueInObject(mojo, "classFolder", new File("target/test-classes"));
         mojo.execute();
@@ -114,7 +118,7 @@ public class ServiceloaderMojoTest {
         BuildContext buildContext = new DefaultBuildContext();
         ServiceloaderMojo mojo = new ServiceloaderMojo();
         mojo.setBuildContext(buildContext);
-        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[]{"com.baz.Baz"});
+        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[] { "com.baz.Baz" });
         ReflectionUtils.setVariableValueInObject(mojo, "compileClasspath", Collections.<String>emptyList());
         ReflectionUtils.setVariableValueInObject(mojo, "classFolder", new File("target/test-classes"));
         mojo.execute();
@@ -124,5 +128,32 @@ public class ServiceloaderMojoTest {
         String serviceFileContents = FileUtils.fileRead(serviceFile);
         Set<String> classNames = Sets.newHashSet(serviceFileContents.trim().split("\n"));
         assertEquals(Sets.newHashSet("com.baz.BazExt", "com.baz.BazExt2"), classNames);
+    }
+
+    @Test
+    public void testNotFailOnMissingClass() throws MojoExecutionException, IllegalAccessException, IOException {
+        BuildContext buildContext = new DefaultBuildContext();
+        ServiceloaderMojo mojo = new ServiceloaderMojo();
+        mojo.setBuildContext(buildContext);
+        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[] { "com.baz.MissingService" });
+        ReflectionUtils.setVariableValueInObject(mojo, "compileClasspath", Collections.<String>emptyList());
+        ReflectionUtils.setVariableValueInObject(mojo, "classFolder", new File("target/test-classes"));
+        ReflectionUtils.setVariableValueInObject(mojo, "failOnMissingServiceClass", false);
+        mojo.execute();
+
+        File serviceFile = new File("target/test-classes/META-INF/services/com.baz.MissingService");
+        assertFalse(serviceFile.exists());
+    }
+
+    @Test(expected = MojoExecutionException.class)
+    public void testFailOnMissingClass() throws MojoExecutionException, IllegalAccessException, IOException {
+        BuildContext buildContext = new DefaultBuildContext();
+        ServiceloaderMojo mojo = new ServiceloaderMojo();
+        mojo.setBuildContext(buildContext);
+        ReflectionUtils.setVariableValueInObject(mojo, "services", new String[] { "com.baz.MissingService" });
+        ReflectionUtils.setVariableValueInObject(mojo, "compileClasspath", Collections.<String>emptyList());
+        ReflectionUtils.setVariableValueInObject(mojo, "classFolder", new File("target/test-classes"));
+        ReflectionUtils.setVariableValueInObject(mojo, "failOnMissingServiceClass", true);
+        mojo.execute();
     }
 }

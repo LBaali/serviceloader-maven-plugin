@@ -7,7 +7,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-            http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,9 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.somatik.serviceloader-maven-plugin</groupId>
     <artifactId>serviceloader-maven-plugin</artifactId>
@@ -36,8 +38,8 @@
         <connection>scm:git:git://github.com/francisdb/serviceloader-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:francisdb/serviceloader-maven-plugin.git</developerConnection>
         <url>https://github.com/francisdb/serviceloader-maven-plugin</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
     <prerequisites>
         <maven>3.0.0</maven>
     </prerequisites>
@@ -189,73 +191,74 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.3</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>release</releaseProfiles>
-                    <goals>deploy</goals>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>2.11</version>
-                <configuration>
-                    <header>src/etc/header.txt</header>
-                    <!--<header>${basedir}/src/etc/header.txt</header> -->
-                    <strictCheck>true</strictCheck>
-                    <failIfMissing>true</failIfMissing>
-                    <encoding>UTF-8</encoding>
-                    <properties>
-                        <email>info@somatik.eu</email>
-                        <username>Francis De Brabandere</username>
-                    </properties>
-                    <excludes>
-                        <exclude>**/*.txt</exclude>
-                        <exclude>**/*.md</exclude>
-                        <exclude>**/.gitignore</exclude>
-                        <exclude>**/.idea/**</exclude>
-                    </excludes>
-                    <mapping>
-                        <java>SLASHSTAR_STYLE</java>
-                    </mapping>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.mycila</groupId>
-                        <artifactId>license-maven-plugin-git</artifactId>
-                        <!-- make sure you use the same version as license-maven-plugin -->
-                        <version>2.11</version>
-                    </dependency>
-                </dependencies>
-                <!-- mvn license:format to add headers -->
-            </plugin>
+            <!-- <plugin> -->
+            <!-- <groupId>org.sonatype.plugins</groupId> -->
+            <!-- <artifactId>nexus-staging-maven-plugin</artifactId> -->
+            <!-- <version>1.6.3</version> -->
+            <!-- <extensions>true</extensions> -->
+            <!-- <configuration> -->
+            <!-- <serverId>ossrh</serverId> -->
+            <!-- <nexusUrl>https://oss.sonatype.org/</nexusUrl> -->
+            <!-- <autoReleaseAfterClose>true</autoReleaseAfterClose> -->
+            <!-- </configuration> -->
+            <!-- </plugin> -->
+            <!-- <plugin> -->
+            <!-- <groupId>org.apache.maven.plugins</groupId> -->
+            <!-- <artifactId>maven-release-plugin</artifactId> -->
+            <!-- <version>2.5</version> -->
+            <!-- <configuration> -->
+            <!-- <autoVersionSubmodules>true</autoVersionSubmodules> -->
+            <!-- <useReleaseProfile>false</useReleaseProfile> -->
+            <!-- <releaseProfiles>release</releaseProfiles> -->
+            <!-- <goals>deploy</goals> -->
+            <!-- </configuration> -->
+            <!-- </plugin> -->
+            <!-- <plugin> -->
+            <!-- <groupId>com.mycila</groupId> -->
+            <!-- <artifactId>license-maven-plugin</artifactId> -->
+            <!-- <version>2.11</version> -->
+            <!-- <configuration> -->
+            <!-- <header>src/etc/header.txt</header> -->
+            <!-- <header>${basedir}/src/etc/header.txt</header> -->
+            <!-- <strictCheck>true</strictCheck> -->
+            <!-- <failIfMissing>true</failIfMissing> -->
+            <!-- <encoding>UTF-8</encoding> -->
+            <!-- <properties> -->
+            <!-- <email>info@somatik.eu</email> -->
+            <!-- <username>Francis De Brabandere</username> -->
+            <!-- </properties> -->
+            <!-- <excludes> -->
+            <!-- <exclude>**/*.txt</exclude> -->
+            <!-- <exclude>**/*.md</exclude> -->
+            <!-- <exclude>**/.gitignore</exclude> -->
+            <!-- <exclude>**/.idea/**</exclude> -->
+            <!-- </excludes> -->
+            <!-- <mapping> -->
+            <!-- <java>SLASHSTAR_STYLE</java> -->
+            <!-- </mapping> -->
+            <!-- </configuration> -->
+            <!-- <executions> -->
+            <!-- <execution> -->
+            <!-- <goals> -->
+            <!-- <goal>check</goal> -->
+            <!-- </goals> -->
+            <!-- </execution> -->
+            <!-- </executions> -->
+            <!-- <dependencies> -->
+            <!-- <dependency> -->
+            <!-- <groupId>com.mycila</groupId> -->
+            <!-- <artifactId>license-maven-plugin-git</artifactId> -->
+            <!-- make sure you use the same version as license-maven-plugin -->
+            <!-- <version>2.11</version> -->
+            <!-- </dependency> -->
+            <!-- </dependencies> -->
+            <!-- mvn license:format to add headers -->
+            <!-- </plugin> -->
         </plugins>
         <pluginManagement>
             <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <!--This plugin's configuration is used to store Eclipse 
+                    m2e settings only. It has no influence on the Maven build itself. -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
