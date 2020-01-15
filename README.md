@@ -74,6 +74,36 @@ for example:
 
 This should add only implementation classes that begin with RightClass*.
 
+# Missing Service Classes
+
+The default action when a service class is missing is to fail the build.
+If you want to ignore this service, you can use the `failOnMissingServiceClass` option (`false` by default).
+
+for example:
+```xml
+<build>
+  <plugins>
+    <plugin>
+      <groupId>eu.somatik.serviceloader-maven-plugin</groupId>
+      <artifactId>serviceloader-maven-plugin</artifactId>
+      <version>1.1.0</version>
+      <configuration>
+      	<failOnMissingServiceClass>false</failOnMissingServiceClass>
+        <services>
+          <param>com.foo.MissingService</param>
+        </services>
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+            <goal>generate</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+</build>
+```
 # Example
 
 A example project is provided and can be run like this:
