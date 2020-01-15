@@ -77,7 +77,7 @@ This should add only implementation classes that begin with RightClass*.
 # Missing Service Classes
 
 The default action when a service class is missing is to fail the build.
-If you want to ignore this service, you can use the `failOnMissingServiceClass` option (`false` by default).
+If you want to ignore this service, you can use the `failOnMissingServiceClass` option (`true` by default).
 
 for example:
 ```xml
